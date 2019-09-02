@@ -7,7 +7,7 @@ const fetchBreedDescription = function(breed, callback) {
   url += breed;
   request(url, (error, response, body) => {
     const data = JSON.parse(body);
-    callback(error, data[0]["description"]);
+    callback(error, data[0]["description"].trim());
   });
 };
 
