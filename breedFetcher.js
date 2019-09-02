@@ -1,30 +1,14 @@
+// need to handle the request call here
 const request = require('request');
+let url = 'https://api.thecatapi.com/v1/breeds/search?q=';
 
-const callback = function(error, body) {
-  let err = "";
-  if (error) {
-    console.log('error:', error);
-    err = "error";
-  }
-  if (body === "[]") {
-    console.log("Breed Not Found");
-    err = "error";
-  }
-  return err;
-};
-
-const fetchBreedDescription = function(url, breed) {
-  if (breed !== undefined) {
+// not right - need to refactor
+const fetchBreedDescription = function(breed, callback) {
+    url += breed;
     request(url, (error, response, body) => {
-      let err = callback(error, body);
-      if (err) return;
       const data = JSON.parse(body);
-      // more like a 2d mapping with the first entry
-      console.log(data[0]["description"]);
+      callback(error, data[0]["description"]);
     });
-  } else {
-    console.log("Breed typed in is not valid");
-  }
 };
 
-module.exports = fetchBreedDescription;
+module.exports = { fetchBreedDescription };
